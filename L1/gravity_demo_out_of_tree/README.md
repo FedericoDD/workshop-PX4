@@ -26,7 +26,7 @@ This follows the PX4 external-module convention: the path passed to
 `EXTERNAL_MODULES_LOCATION` contains a `src/` directory, and `src/CMakeLists.txt`
 exports `config_module_list_external`.
 
-## Build with PX4 v1.17.0
+## Build with PX4
 
 Place this folder next to your PX4 checkout, for example:
 
@@ -39,9 +39,9 @@ workspace/
 Then:
 
 ```bash
-./QGroundControl-x86_64.AppImage &
+./QGroundControl-x86_64.AppImage & # ONLY FOR UBUNTU
 cd PX4-Autopilot
-make px4_sitl EXTERNAL_MODULES_LOCATION= ../gravity_demo_out_of_tree/
+make px4_sitl EXTERNAL_MODULES_LOCATION="../gravity_demo_out_of_tree/"
 ```
 
 Important: PX4 documentation notes that the external-module location should be
