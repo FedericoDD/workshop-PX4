@@ -1,6 +1,4 @@
-# gravity_demo — minimal PX4 v1.17 out-of-tree module
-
-This package is intentionally small enough to show on a lecture slide.
+# gravity_demo — minimal PX4 out-of-tree module
 
 ## What it teaches
 
@@ -9,7 +7,7 @@ This package is intentionally small enough to show on a lecture slide.
 3. `vehicle_attitude.q` represents the BODY/FRD -> NED attitude.
 4. The same physical gravity vector can be expressed in another reference frame.
 
-The module does **not** print in a loop. The calculation is shown only when
+The calculation is shown only when
 `gravity_demo status` is called.
 
 ## Directory structure
@@ -103,4 +101,4 @@ is written explicitly:
 reference frames -> quaternion -> rotation -> transformed vector
 ```
 
-A production module could use PX4's matrix library directly.
+But you could use PX4's matrix library directly.
