@@ -1,0 +1,4 @@
+# Companion side of Lesson 3: runs on the HOST OS (where the webcam is).
+opencv-python>=4.8
+numpy
+pymavlink
