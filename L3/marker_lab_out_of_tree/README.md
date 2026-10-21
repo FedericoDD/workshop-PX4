@@ -113,10 +113,12 @@ The printed markers, their measured size and the tape measures are provided by t
 With the venv active (`(.venv)` in the prompt):
 
 ```bash
-python aruco_companion.py --no-px4 --id 0 --dict DICT_4X4_50 --size 0.10 --hfov 70
+python aruco_companion.py --no-px4 --id 0 --dict DICT_4X4_50 --size 0.05 --hfov 70
 ```
 
-`--id`, `--dict` and `--size` (side of the black square in metres) are placeholders here: use the values given in class with the printed marker.
+The workshop marker is **`DICT_4X4_50`, id 0, black side 5 cm** (`--size 0.05`). These are also the script defaults, so `python aruco_companion.py --no-px4` alone does the same.
+
+A 5 cm marker is small: with the usual 640×480 webcam stream it is detected up to about **1.2 m** (beyond that it covers fewer than ~20 px). Work between 0.25 and 1 m.
 
 A window opens with the video. When the marker is visible, you see its outline, its axes (red x, green y, blue z) and a line like this:
 
@@ -160,7 +162,7 @@ Terminal 2 (companion):
 ```bash
 cd marker_lab_out_of_tree/companion
 source .venv/bin/activate
-python aruco_companion.py --id 0 --size 0.10 --hfov 70 --px4 udpout:127.0.0.1:14580
+python aruco_companion.py --id 0 --size 0.05 --hfov 70 --px4 udpout:127.0.0.1:14580
 ```
 
 `14580` is the UDP port where PX4 SITL listens on its **onboard** MAVLink link, the link a companion computer uses.
@@ -179,13 +181,13 @@ PX4 runs in an **Ubuntu terminal inside WSL2**, as in the previous lessons. The 
   then run `wsl --shutdown`, reopen Ubuntu and start PX4 again. `127.0.0.1` now works from both sides:
 
   ```powershell
-  python aruco_companion.py --id 0 --size 0.10 --px4 udpout:127.0.0.1:14580
+  python aruco_companion.py --id 0 --size 0.05 --px4 udpout:127.0.0.1:14580
   ```
 
 - **WSL IP address:** in Ubuntu, `hostname -I` prints an address such as `172.27.10.5`. Use it from Windows:
 
   ```powershell
-  python aruco_companion.py --id 0 --size 0.10 --px4 udpout:172.27.10.5:14580
+  python aruco_companion.py --id 0 --size 0.05 --px4 udpout:172.27.10.5:14580
   ```
 
 **Important on all platforms:** there is **no space after `EXTERNAL_MODULES_LOCATION=`**. If the module is not picked up because PX4 SITL was already configured with a different external path (for example `attitude_lab`), stop SITL, check with `pwd` that you are in the right PX4 checkout, and reconfigure:
@@ -233,11 +235,11 @@ INFO  [marker_lab] samples 412 | rate 29.8 Hz | age 0.03 s
 
 ## 6. Exercises
 
-1. **Is the distance right?** Place the marker at 0.5, 1.0, 1.5 and 2.0 m, measured with a tape, and fill in a table with columns *true distance | dist | error %*. If the error is always in the same direction, change `--hfov` until it shrinks. A wrong `K` gives a **bias**, not noise, and no filter can average it away (slides 13 and 17).
-2. **Scale comes from the known size.** Pass a `--size` that is twice the real value. The distance doubles and the picture does not change at all. A single camera cannot see scale; the prior "this marker is 10 cm" fixes it (slide 19).
+1. **Is the distance right?** Place the marker at 0.25, 0.50, 0.75 and 1.00 m, measured with a tape, and fill in a table with columns *true distance | dist | error %*. If the error is always in the same direction, change `--hfov` until it shrinks. A wrong `K` gives a **bias**, not noise, and no filter can average it away (slides 13 and 17).
+2. **Scale comes from the known size.** Pass a `--size` that is twice the real value. The distance doubles and the picture does not change at all. A single camera cannot see scale; the prior "this marker is 5 cm" fixes it (slide 19).
 3. **Distortion.** Keep the distance fixed and move the marker from the centre to the corners of the image. Does the distance change? Our model assumes `distortion = 0`, and wide-angle lenses are not distortion-free (slide 15).
 4. **Frames.** Move the marker right, left, up and down. Predict the sign of every component of `p_CAM` and `p_FRD`, then check with `marker_lab status` (slide 10).
-5. **Noise grows with distance.** Keep the marker still at 0.5 m and then at 2 m, and watch how much `t_cam` fluctuates in the terminal. The same ~0.5 px of corner noise weighs much more when the marker covers few pixels (slides 16 and 21).
+5. **Noise grows with distance.** Keep the marker still at 0.3 m and then at 1.2 m, and watch how much `t_cam` fluctuates in the terminal. The same ~0.5 px of corner noise weighs much more when the marker covers few pixels (slides 16 and 21).
 6. *(Bonus)* Tilt the marker by about 60°. `Z` from PnP stays correct, but `pinhole Z` does not: the pinhole check assumes the marker faces the camera, while PnP uses all 4 corners.
 
 ## 7. Link the Lesson 3 equations to the code

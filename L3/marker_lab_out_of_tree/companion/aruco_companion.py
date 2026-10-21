@@ -25,10 +25,10 @@ MAVLINK_NAME = "ARUCO"  # must match lesson3::kMarkerName in marker_lab.cpp
 def parse_args():
     p = argparse.ArgumentParser(description="Webcam -> ArUco -> solvePnP -> distance (-> PX4).")
     p.add_argument("--camera", type=int, default=0, help="webcam index for cv2.VideoCapture")
-    p.add_argument("--dict", default="DICT_4X4_50", help="ArUco dictionary (TBD by the workshop)")
-    p.add_argument("--id", type=int, default=0, help="marker id to track (TBD by the workshop)")
-    p.add_argument("--size", type=float, default=0.10,
-                   help="side of the BLACK square in metres, measured on the print (TBD)")
+    p.add_argument("--dict", default="DICT_4X4_50", help="ArUco dictionary (workshop: DICT_4X4_50)")
+    p.add_argument("--id", type=int, default=0, help="marker id to track (workshop: 0)")
+    p.add_argument("--size", type=float, default=0.05,
+                   help="side of the BLACK square in metres (workshop: 0.05 = 5 cm)")
     p.add_argument("--hfov", type=float, default=70.0,
                    help="webcam horizontal field of view in degrees (look it up, then tune it)")
     p.add_argument("--px4", default="udpout:127.0.0.1:14580",

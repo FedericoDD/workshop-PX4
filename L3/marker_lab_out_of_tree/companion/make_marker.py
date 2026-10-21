@@ -14,7 +14,7 @@ import cv2
 
 def main():
     parser = argparse.ArgumentParser(description="Generate a printable ArUco marker PNG.")
-    parser.add_argument("--id", type=int, default=0, help="marker id (TBD by the workshop)")
+    parser.add_argument("--id", type=int, default=0, help="marker id (workshop: 0)")
     parser.add_argument("--dict", default="DICT_4X4_50", help="ArUco dictionary, e.g. DICT_4X4_50")
     parser.add_argument("--px", type=int, default=800, help="side of the black square in pixels")
     parser.add_argument("--border", type=int, default=100, help="white quiet zone in pixels")
